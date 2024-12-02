@@ -7,31 +7,28 @@ use App\Http\Controllers\MienbroController;
 use App\Http\Controllers\GradoController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
-// Ruta principal con autenticación
+
+// Ruta principal - Página de bienvenida
 Route::get('/', function () {
-    return view('index');
-})->middleware('auth');
+    if (Auth::check()) {
+        return redirect('/dashboard');
+    }
+    return view('welcome');
+});
 
-// Rutas de Asistencias
-Route::get('/asistencias/show', [AsistenciaController::class, 'show'])->name('asistencias.show');
-
-Route::get('/asistencias', [AsistenciaController::class, 'index'])->name('asistencias.index');
-Route::get('/asistencias/estudiantes/{grado_id}', [AsistenciaController::class, 'getEstudiantesPorGrado'])->name('asistencias.estudiantes');
-Route::post('/asistencias', [AsistenciaController::class, 'store'])->name('asistencias.store');
-Route::get('/asistencias/grados/{gradoId}/{fecha}', [AsistenciaController::class, 'getAsistenciasPorFechaYGrado'])->name('asistencias.filtro');
-
-// Autenticación (Auth)
+// Rutas de autenticación
 Auth::routes(['register' => false]);
 
-// Ruta para Home
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+// Rutas protegidas que requieren autenticación
+Route::middleware(['auth'])->group(function () {
+    // Dashboard
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 
-// Recursos para Mienbros y Grados
-Route::resource('mienbros', MienbroController::class);
-Route::resource('grados', GradoController::class);
-
-
-//para ususario rafa es users
-Route::resource('users', UserController::class);
-Route::resource('users', UserController::class);
-
+    // Rutas de administración
+    Route::resource('grados', GradoController::class);
+    Route::resource('mienbros', MienbroController::class);
+    Route::resource('asistencias', AsistenciaController::class);
+    Route::resource('users', UserController::class);
+});

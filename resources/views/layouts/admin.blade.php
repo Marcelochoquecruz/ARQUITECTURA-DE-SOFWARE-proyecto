@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sistema de control de asistencia</title>
+  <title>Sistema de control de asistencia - Colegio Don Bosco</title>
   <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -14,6 +14,8 @@
   <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
   <!-- Iconos de bootstrap -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     
   <!-- jQuery -->
   <script src="{{ asset('/plugins/jquery/jquery.js') }}"></script>
@@ -26,6 +28,121 @@
   <!--Sweetalert2-->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+  <style>
+    :root {
+      --primary-color: #004B87;
+      --secondary-color: #FFD700;
+      --accent-color: #607d8b;
+      --success-color: #28a745;
+      --danger-color: #dc3545;
+      --warning-color: #ffc107;
+      --info-color: #17a2b8;
+    }
+
+    body {
+      font-family: 'Source Sans Pro', sans-serif;
+    }
+
+    .main-sidebar {
+      background: var(--primary-color);
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .nav-link {
+      transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+      background: var(--secondary-color);
+      color: var(--primary-color) !important;
+      transform: translateX(5px);
+    }
+
+    .brand-link {
+      border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+    }
+
+    .content-wrapper {
+      background: #f4f6f9;
+    }
+
+    .card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .btn {
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .table {
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .table thead th {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+      background-color: rgba(0,75,135,0.05);
+    }
+
+    .form-control {
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.2rem rgba(0,75,135,0.25);
+    }
+
+    .main-footer {
+      background: var(--accent-color);
+      color: white;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+
+    /* Animaciones */
+    .animate__animated {
+      animation-duration: 0.5s;
+    }
+
+    /* Notificaciones */
+    .navbar-badge {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+  </style>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -160,6 +277,15 @@
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
           <i class="fas fa-th-large"></i>
         </a>
+      </li>
+      <li class="nav-item">
+        <form method="POST" action="{{ route('logout') }}" id="logout-form">
+            @csrf
+            <a class="nav-link text-danger" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="nav-link-text ms-1">Cerrar Sesión</span>
+            </a>
+        </form>
       </li>
     </ul>
   </nav>
